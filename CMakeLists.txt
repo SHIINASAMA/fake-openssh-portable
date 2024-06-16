@@ -2,6 +2,13 @@ cmake_minimum_required(VERSION 3.13)
 
 project(fake-openssh-portable)
 
+set(CFLAGS "-g -O2 -pipe -Wno-error=format-truncation -Wall -Wextra -Wpointer-arith -Wuninitialized -Wsign-compare -Wformat-security -Wsizeof-pointer-memaccess -Wno-pointer-sign -Wno-unused-parameter -Wno-unused-result -Wimplicit-fallthrough -Wmisleading-indentation -fno-strict-aliasing -D_FORTIFY_SOURCE=2 -ftrapv -fzero-call-used-regs=used -ftrivial-auto-var-init=zero -fno-builtin-memset -fstack-protector-strong -fPIE")
+set(CFLAGS_NOPIE "-g -O2 -pipe -Wno-error=format-truncation -Wall -Wextra -Wpointer-arith -Wuninitialized -Wsign-compare -Wformat-security -Wsizeof-pointer-memaccess -Wno-pointer-sign -Wno-unused-parameter -Wno-unused-result -Wimplicit-fallthrough -Wmisleading-indentation -fno-strict-aliasing -D_FORTIFY_SOURCE=2 -ftrapv -fzero-call-used-regs=used -ftrivial-auto-var-init=zero -fno-builtin-memset -fstack-protector-strong")
+set(CHANNELLIBS "-lcrypto  -lz")
+set(SSHDLIBS "-lcrypt")
+
+add_subdirectory(openbsd-compat)
+
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 add_library(XMSS OBJECT
@@ -50,8 +57,14 @@ add_library(LIBSSH OBJECT
 )
 
 add_library(SK OBJECT
-    ssh-sk-client.c
+        ssh-sk-client.c
 )
+
+add_library(SSH OBJECT
+        ssh.c readconf.c clientloop.c sshtty.c
+        sshconnect.c sshconnect2.c mux.c
+)
+target_link_libraries(SSH PUBLIC SK)
 
 add_library(SSHD OBJECT
         platform-listen.c 
@@ -128,3 +141,5 @@ add_library(SFTP OBJECT
         sftp.c sftp-usergroup.c progressmeter.c
 )
 target_link_libraries(SFTP PUBLIC SFTP_CLIENT)
+
+# 可执行目标

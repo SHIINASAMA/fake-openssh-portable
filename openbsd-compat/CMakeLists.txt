@@ -1,0 +1,95 @@
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_LIST_DIR})
+
+add_library(OPENBSD OBJECT
+        arc4random.c
+        arc4random_uniform.c
+        base64.c
+        basename.c
+        bcrypt_pbkdf.c
+        bindresvport.c
+        blowfish.c
+        daemon.c
+        dirname.c
+        explicit_bzero.c
+        fmt_scaled.c
+        freezero.c
+        fnmatch.c
+        getcwd.c
+        getgrouplist.c
+        getopt_long.c
+        getrrsetbyname.c
+        glob.c
+        inet_aton.c
+        inet_ntoa.c
+        inet_ntop.c
+        md5.c
+        memmem.c
+        mktemp.c
+        pwcache.c
+        readpassphrase.c
+        reallocarray.c
+        recallocarray.c
+        rresvport.c
+        setenv.c
+        setproctitle.c
+        sha1.c
+        sha2.c
+        sigact.c
+        strcasestr.c
+        strlcat.c
+        strlcpy.c
+        strmode.c
+        strndup.c
+        strnlen.c
+        strptime.c
+        strsep.c
+        strtoll.c
+        strtonum.c
+        strtoull.c
+        strtoul.c
+        timingsafe_bcmp.c
+        vis.c
+)
+
+add_library(COMPAT OBJECT
+        bsd-asprintf.c 
+	    bsd-closefrom.c 
+	    bsd-cygwin_util.c 
+	    bsd-err.c 
+	    bsd-flock.c 
+	    bsd-getentropy.c 
+	    bsd-getline.c 
+	    bsd-getpagesize.c 
+	    bsd-getpeereid.c 
+	    bsd-malloc.c 
+	    bsd-misc.c 
+	    bsd-nextstep.c 
+	    bsd-openpty.c 
+	    bsd-poll.c 
+	    bsd-pselect.c 
+	    bsd-setres_id.c 
+	    bsd-signal.c 
+	    bsd-snprintf.c 
+	    bsd-statvfs.c 
+	    bsd-timegm.c 
+	    bsd-waitpid.c 
+	    fake-rfc2553.c 
+	    getrrsetbyname-ldns.c 
+	    kludge-fd_set.c 
+	    openssl-compat.c 
+	    libressl-api-compat.c 
+	    xcrypt.c
+)
+
+add_library(PORTS OBJECT
+        port-aix.c
+        port-irix.c
+        port-linux.c
+        port-prngd.c
+        port-solaris.c
+        port-net.c
+        port-uw.c
+)
+
+add_library(libopenbsd-compat)
+target_link_libraries(libopenbsd-compat PUBLIC COMPAT OPENBSD PORTS)
