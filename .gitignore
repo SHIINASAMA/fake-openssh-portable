@@ -39,3 +39,6 @@ configure
 aclocal.m4
 ChangeLog
 **/*.0
+
+# cmake
+/build
