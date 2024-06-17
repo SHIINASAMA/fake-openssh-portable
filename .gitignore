@@ -41,4 +41,8 @@ ChangeLog
 **/*.0
 
 # cmake
+/cmake-*
 /build
+/regress
+/.idea
+/.vscode

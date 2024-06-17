@@ -1,6 +1,6 @@
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_LIST_DIR})
 
-add_library(OPENBSD OBJECT
+set(OPENBSD
         arc4random.c
         arc4random_uniform.c
         base64.c
@@ -51,37 +51,37 @@ add_library(OPENBSD OBJECT
         vis.c
 )
 
-add_library(COMPAT OBJECT
-        bsd-asprintf.c 
-	    bsd-closefrom.c 
-	    bsd-cygwin_util.c 
-	    bsd-err.c 
-	    bsd-flock.c 
-	    bsd-getentropy.c 
-	    bsd-getline.c 
-	    bsd-getpagesize.c 
-	    bsd-getpeereid.c 
-	    bsd-malloc.c 
-	    bsd-misc.c 
-	    bsd-nextstep.c 
-	    bsd-openpty.c 
-	    bsd-poll.c 
-	    bsd-pselect.c 
-	    bsd-setres_id.c 
-	    bsd-signal.c 
-	    bsd-snprintf.c 
-	    bsd-statvfs.c 
-	    bsd-timegm.c 
-	    bsd-waitpid.c 
-	    fake-rfc2553.c 
-	    getrrsetbyname-ldns.c 
-	    kludge-fd_set.c 
-	    openssl-compat.c 
-	    libressl-api-compat.c 
-	    xcrypt.c
+set(COMPAT
+        bsd-asprintf.c
+        bsd-closefrom.c
+        bsd-cygwin_util.c
+        bsd-err.c
+        bsd-flock.c
+        bsd-getentropy.c
+        bsd-getline.c
+        bsd-getpagesize.c
+        bsd-getpeereid.c
+        bsd-malloc.c
+        bsd-misc.c
+        bsd-nextstep.c
+        bsd-openpty.c
+        bsd-poll.c
+        bsd-pselect.c
+        bsd-setres_id.c
+        bsd-signal.c
+        bsd-snprintf.c
+        bsd-statvfs.c
+        bsd-timegm.c
+        bsd-waitpid.c
+        fake-rfc2553.c
+        getrrsetbyname-ldns.c
+        kludge-fd_set.c
+        openssl-compat.c
+        libressl-api-compat.c
+        xcrypt.c
 )
 
-add_library(PORTS OBJECT
+set(PORTS
         port-aix.c
         port-irix.c
         port-linux.c
@@ -90,6 +90,8 @@ add_library(PORTS OBJECT
         port-net.c
         port-uw.c
 )
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
 
-add_library(libopenbsd-compat)
-target_link_libraries(libopenbsd-compat PUBLIC COMPAT OPENBSD PORTS)
+add_library(openbsd-compat ../config.h ${OPENBSD} ${COMPAT} ${PORTS})
+target_link_libraries(openbsd-compat PUBLIC libssh OpenSSL::Crypto ZLIB::ZLIB)
