@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+    "openssl", "zlib",
+    {
+      "name": "sese",
+      "default-features": false
+    }
+  ]
+}
