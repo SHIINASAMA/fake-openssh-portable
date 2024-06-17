@@ -40,9 +40,13 @@ aclocal.m4
 ChangeLog
 **/*.0
 
-# cmake
+# fake-openssh-portable
 /cmake-*
 /build
 /regress
 /.idea
 /.vscode
+/.cache
+configure~
+CMakePresets.json
+CMakeUserPresets.json
