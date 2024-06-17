@@ -90,8 +90,6 @@ set(PORTS
         port-net.c
         port-uw.c
 )
-find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
 
 add_library(openbsd-compat ../config.h ${OPENBSD} ${COMPAT} ${PORTS})
-target_link_libraries(openbsd-compat PUBLIC libssh OpenSSL::Crypto ZLIB::ZLIB)
+target_link_libraries(openbsd-compat PUBLIC libssh)

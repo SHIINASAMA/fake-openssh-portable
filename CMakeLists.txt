@@ -148,7 +148,7 @@ add_executable(sshd config.h ${SSHD_SRCS})
 target_link_libraries(sshd PUBLIC libssh OpenSSL::Crypto ZLIB::ZLIB)
 
 add_executable(sshd-session config.h ${SSHD_SESSION_SRCS})
-target_link_libraries(sshd-session PUBLIC libssh openbsd-compat OpenSSL::Crypto ZLIB::ZLIB )
+target_link_libraries(sshd-session PUBLIC libssh openbsd-compat OpenSSL::Crypto ZLIB::ZLIB crypt)
 
 add_executable(scp config.h ${SCP_SRCS})
 target_link_libraries(scp PUBLIC libssh openbsd-compat OpenSSL::Crypto ZLIB::ZLIB)
